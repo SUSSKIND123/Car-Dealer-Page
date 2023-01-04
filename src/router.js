@@ -7,6 +7,8 @@ import Carros3 from "./components/Carros3.vue";
 import Carros4 from "./components/Carros4.vue";
 import SeguroVida from "./components/SeguroVida.vue";
 import SeguroCarro from "./components/SeguroCarro.vue";
+import SeguroCarroMarca from "./components/SeguroCarroMarca.vue";
+import SeguroAuto from "./components/SeguroAuto.vue";
 import EntreContato from "./components/EntreContato.vue";
 import Duvida from "./components/Duvida.vue";
 import Errado from "./components/Errado.vue";
@@ -14,6 +16,7 @@ import Outro from "./components/Outro.vue";
 import Reclamacao from "./components/Reclamacao.vue";
 import store from "./store/index.js";
 import Cart from "./components/Cart.vue";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -35,6 +38,17 @@ const router = createRouter({
       component: SeguroCarro,
       meta: { requiresAuth: true },
     },
+    {
+      path: "/seguroCarro2",
+      component: SeguroCarroMarca,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/seguroAuto",
+      component: SeguroAuto,
+      meta: { requiresAuth: true },
+    },
+
     { path: "/entre", component: EntreContato, meta: { requiresAuth: true } },
     { path: "/cart", component: Cart, meta: { requiresAuth: true } },
     { path: "/duvida", component: Duvida, meta: { requiresAuth: true } },

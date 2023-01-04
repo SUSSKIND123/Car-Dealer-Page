@@ -11,7 +11,7 @@
       </div>
       <ul class="list" v-if="selectingMarca">
         <li
-          v-for="marca in filteredModels"
+          v-for="marca in filteredMarcas"
           :key="marca"
           @click="selectMarca(marca)"
         >
@@ -49,14 +49,14 @@ export default {
       selectingMarca.value = true;
     }
     let search = reactive({ search: "" });
-    const uniqueModels = computed({
+    const uniqueMarcas = computed({
       get: () => {
-        return [...new Set(data.data.results.map((item) => item.Model))];
+        return [...new Set(data.data.results.map((item) => item.Make))];
       },
     });
-    const filteredModels = computed({
+    const filteredMarcas = computed({
       get: () => {
-        return uniqueModels.value.filter((marca) => {
+        return uniqueMarcas.value.filter((marca) => {
           if (search.search) {
             return marca.toLowerCase().startsWith(search.search.toLowerCase());
           } else {
@@ -67,7 +67,7 @@ export default {
     });
     return {
       data: data,
-      filteredModels,
+      filteredMarcas,
       search,
       selectMarca,
       selectingMarca,

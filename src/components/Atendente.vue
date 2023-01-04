@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <h1 class="avonale" style="text-decoration: underline solid aliceblue">
+      Avonale
+    </h1>
     <div class="dropdown">
       <select
         name="dropdown"
@@ -121,7 +124,7 @@ export default {
         this.$router.push("/carros");
       }
       if (seminovo == "seguroCarro") {
-        this.$router.push("/seguroCarro");
+        this.$router.push("/seguroAuto");
       }
       if (seminovo == "seguroVida") {
         this.$router.push("/seguroVida");
@@ -153,6 +156,24 @@ export default {
 </script>
 
 <style scoped>
+.avonale {
+  position: absolute;
+  left: 57%;
+  top: -2.5%;
+  z-index: 10000;
+  color: whitesmoke;
+  font-size: 30px;
+}
+.dropdown {
+  margin-left: 45%;
+  margin-top: 4%;
+  position: absolute;
+  z-index: 1000;
+  background: repeating-linear-gradient(grey, grey 22%, white 26%, gold 28%);
+  border: 10px inset white;
+  height: 45%;
+}
+
 .hidden2,
 .hidden4,
 .hidden6 {
@@ -264,15 +285,7 @@ export default {
 .suit img {
   width: 200px;
 }
-.dropdown {
-  margin-left: 45%;
-  margin-top: 1%;
-  position: absolute;
-  z-index: 1000;
-  background: repeating-linear-gradient(grey, grey 22%, white 26%, gold 28%);
-  border: 10px inset white;
-  height: 45%;
-}
+
 .suit {
   position: relative;
   width: 6%;
