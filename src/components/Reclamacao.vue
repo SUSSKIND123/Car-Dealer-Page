@@ -1,1 +1,1 @@
-<template>reclamacao</template>
+<template>Reclamaçao</template>

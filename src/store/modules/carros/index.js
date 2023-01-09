@@ -1,4 +1,5 @@
 import getters from "./getters.js";
+import mutations from "./mutations.js";
 export default {
   state() {
     return {
@@ -150,7 +151,9 @@ export default {
           price: 239600,
         },
       ],
+      marca: "",
     };
   },
   getters: getters,
+  mutations: mutations,
 };

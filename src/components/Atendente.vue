@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="avonale" style="text-decoration: underline solid aliceblue">
-      Avonale
-    </h1>
+    <h1 class="avonale">Avonale</h1>
     <div class="dropdown">
       <select
         name="dropdown"
@@ -158,15 +156,27 @@ export default {
 <style scoped>
 .avonale {
   position: absolute;
-  left: 57%;
-  top: -2.5%;
+  left: 37.8645%;
+  top: -2%;
   z-index: 10000;
   color: whitesmoke;
   font-size: 30px;
+  padding: 0 150px;
+  padding-bottom: 5.6px;
+}
+.avonale::after {
+  content: "";
+  position: absolute;
+  left: 100px;
+  bottom: 0;
+  background: white;
+  top: 40px;
+  width: 100%;
+  height: 3px;
 }
 .dropdown {
   margin-left: 45%;
-  margin-top: 4%;
+  margin-top: 3.9%;
   position: absolute;
   z-index: 1000;
   background: repeating-linear-gradient(grey, grey 22%, white 26%, gold 28%);

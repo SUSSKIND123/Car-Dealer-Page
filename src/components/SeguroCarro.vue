@@ -1,30 +1,61 @@
 <template>
   <div class="overlay">
-    <form autocomplete="off">
-      <div>
+    <form autocomplete="off" @submit.prevent="submitted">
+      <h1 class="marcaTitulo">Qual o modelo e versão do seu {{ marca }}?</h1>
+      <div class="inputDiv">
         <input
           type="text"
-          placeholder="Qual é a marca do seu carro?"
+          placeholder="Modelo..."
+          ref="input"
           v-model="search.search"
           @input="selectingAgain"
+          :class="{ invalid: error == 'true' || error == 'invalidInput' }"
         />
       </div>
-      <ul class="list" v-if="selectingMarca">
+      <ul class="list" v-if="selectingModel">
         <li
-          v-for="marca in filteredModels"
-          :key="marca"
-          @click="selectMarca(marca)"
+          v-for="model in filteredModels"
+          :key="model"
+          @click="selectModel(model)"
         >
-          {{ marca }}
+          {{ model }}
         </li>
       </ul>
+      <p v-if="error == 'true'" style="font-size: 15px">
+        Por favor, preencha este campo
+      </p>
+      <p v-if="error == 'invalidInput'" style="font-size: 15px">
+        Ooops! Modelo não encontrado. Que tal revisar os dados informados?
+      </p>
     </form>
+    <ripples-button
+      class="move"
+      :timeout="450"
+      content="CONTINUAR"
+      @click="submitted"
+      v-if="filteredModels.length < 1 || !selectingModel"
+    >
+    </ripples-button>
+    <confirm-box
+      v-if="askForConfirmation"
+      @leave="leave"
+      @cancel="cancel"
+    ></confirm-box>
   </div>
 </template>
 
 <script>
+import RipplesButton from "./RipplesButton.vue";
+import confirmBox from "./confirmBox.vue";
 import { onMounted, reactive, computed, ref } from "vue";
+import { useStore } from "vuex";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 export default {
+  components: {
+    RipplesButton,
+    confirmBox,
+  },
+
   setup() {
     let data = reactive({ data: { results: [{ Model: "" }] } });
     onMounted(async () => {
@@ -40,39 +71,101 @@ export default {
       );
       data.data = await response.json();
     });
-    const selectingMarca = ref(true);
-    function selectMarca(marca) {
-      search.search = marca;
-      selectingMarca.value = false;
+    const selectingModel = ref(true);
+    let error = ref("false");
+    let router = useRouter();
+    let askForConfirmation = ref(false);
+    function selectModel(model) {
+      search.search = model;
+      selectingModel.value = false;
+    }
+    function submitted() {
+      console.log("hi");
+      if (search.search == "") {
+        error.value = "true";
+      } else if (uniqueModels.value.indexOf(search.search) == -1) {
+        error.value = "invalidInput";
+      } else {
+        router.push("/seguro2");
+      }
     }
     function selectingAgain() {
-      selectingMarca.value = true;
+      selectingModel.value = true;
+      error.value = "false";
     }
     let search = reactive({ search: "" });
+    const marca = computed({
+      get() {
+        const marca = useStore().getters.marca;
+        console.log(marca);
+        return marca;
+      },
+    });
     const uniqueModels = computed({
       get: () => {
-        return [...new Set(data.data.results.map((item) => item.Model))];
+        return [
+          ...new Set(filteredNonUniqueModels.value.map((item) => item.Model)),
+        ];
       },
+    });
+    const filteredNonUniqueModels = computed({
+      get: () => {
+        return data.data.results.filter((modelo) => {
+          return modelo.Make === marca.value;
+        });
+      },
+      //I want to make it so that after the selection of marca in SeguroCarroMarca,
+      //I filter models so only models of that marca appear
     });
     const filteredModels = computed({
       get: () => {
-        return uniqueModels.value.filter((marca) => {
+        return uniqueModels.value.filter((modelo) => {
           if (search.search) {
-            return marca.toLowerCase().startsWith(search.search.toLowerCase());
+            return modelo.toLowerCase().startsWith(search.search.toLowerCase());
           } else {
             return false;
           }
         });
       },
     });
+    let leaveConfirm = ref(false);
+    function leave() {
+      leaveConfirm.value = true;
+      router.push("/seguro");
+    }
+    function cancel() {
+      askForConfirmation.value = false;
+    }
+    onBeforeRouteLeave((to) => {
+      askForConfirmation.value = true;
+      if (to.path == "/seguro" && !leaveConfirm.value) {
+        return false;
+      }
+      return true;
+    });
+
     return {
       data: data,
       filteredModels,
       search,
-      selectMarca,
-      selectingMarca,
+      selectModel,
+      selectingModel,
       selectingAgain,
+      marca,
+      submitted,
+      error,
+      askForConfirmation,
+      leave,
+      cancel,
     };
+  },
+
+  watch: {
+    error(error) {
+      if (error != "false") {
+        this.$refs.input.focus();
+      }
+    },
   },
 };
 </script>
@@ -83,6 +176,25 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+.move {
+  margin-top: 215px;
+}
+
+.marcaTitulo {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  margin-left: 60px;
+}
+
+p {
+  padding-top: 10px;
+  margin-left: 10px;
+  color: #f44336;
+  font-size: 11px;
+  position: relative;
+}
+
 li {
   padding: 16px 16px 16px 16px;
   cursor: pointer;
@@ -104,6 +216,7 @@ form {
   left: 50%;
   padding: 40px 0;
 }
+
 input[type="text"] {
   width: 100%;
   padding: 15px 10px;
@@ -116,10 +229,17 @@ input[type="text"] {
   box-shadow: 0px 0.5px 0px 0.4px rgb(0, 0, 0, 0.2);
 }
 input[type="text"]:hover {
-  border: 0.0001px solid blue;
+  border: 1.4px solid black;
 }
 input[type="text"]:focus {
-  border: 1.48px solid lightblue;
+  border: 1.4px solid black;
+}
+input[type="text"].invalid {
+  border: 1.45px solid #f44336;
+  box-shadow: none;
+}
+input[type="text"]::placeholder {
+  opacity: 0.3;
 }
 ul {
   list-style: none;

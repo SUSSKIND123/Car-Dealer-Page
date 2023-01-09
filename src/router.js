@@ -34,12 +34,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/seguroCarro",
+      path: "/seguro2",
       component: SeguroCarro,
       meta: { requiresAuth: true },
     },
     {
-      path: "/seguroCarro2",
+      path: "/seguro",
       component: SeguroCarroMarca,
       meta: { requiresAuth: true },
     },
@@ -62,11 +62,16 @@ const router = createRouter({
     { path: "/:notFound(.*)", redirect: "/login" },
   ],
 });
-router.beforeEach(function (to, _, next) {
+router.beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
     next("/login");
   } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
     next("/atendente");
+  } else if (
+    (to.path == "/atendente" || to.path == "/seguroAuto") &&
+    from.path == "/seguro"
+  ) {
+    router.push("/seguro");
   } else {
     next();
   }

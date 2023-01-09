@@ -7,7 +7,7 @@
       justo. Faça uma cotação de seguro auto gratuita e 100% online, com <br />
       resultados na sua tela.
     </p>
-    <div class="button" @click="this.$router.push('/seguroCarro')">
+    <div class="button" @click="this.$router.push('/seguro')">
       <button class="button-17" role="button">
         <span>COTAR MEU SEGURO</span>
       </button>
