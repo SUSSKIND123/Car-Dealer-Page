@@ -7,7 +7,7 @@
       justo. Faça uma cotação de seguro auto gratuita e 100% online, com <br />
       resultados na sua tela.
     </p>
-    <div class="button" @click="this.$router.push('/seguro')">
+    <div class="button" @click="forward">
       <button class="button-17" role="button">
         <span>COTAR MEU SEGURO</span>
       </button>
@@ -25,7 +25,34 @@
       </div>
     </a>
   </div>
+  <GoBackButton @click="this.$router.replace('/atendente')"></GoBackButton>
+  <LogoutButtonVue color="white"></LogoutButtonVue>
 </template>
+<script>
+import LogoutButtonVue from "./LogoutButton.vue";
+import GoBackButton from "./GoBackButton.vue";
+import { ref } from "vue";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
+export default {
+  components: { GoBackButton, LogoutButtonVue },
+  setup() {
+    const router = useRouter();
+    onBeforeRouteLeave((to) => {
+      if (to.path == "/seguro" && !confirmRoute.value) {
+        router.replace("/atendente");
+      }
+    });
+    let confirmRoute = ref(false);
+    function forward() {
+      confirmRoute.value = true;
+      router.push("/seguro");
+    }
+    return {
+      forward,
+    };
+  },
+};
+</script>
 <style scoped>
 .telefone {
   position: absolute;

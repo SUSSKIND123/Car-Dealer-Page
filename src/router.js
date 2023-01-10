@@ -29,7 +29,7 @@ const router = createRouter({
     { path: "/carros/p4", component: Carros4, meta: { requiresAuth: true } },
 
     {
-      path: "/seguroVida",
+      path: "/segurovida",
       component: SeguroVida,
       meta: { requiresAuth: true },
     },
@@ -44,7 +44,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/seguroAuto",
+      path: "/seguroauto",
       component: SeguroAuto,
       meta: { requiresAuth: true },
     },

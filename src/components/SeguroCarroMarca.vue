@@ -17,6 +17,7 @@
           v-for="marca in filteredModels"
           :key="marca"
           @click="selectMarca(marca)"
+          class="borderedList"
         >
           {{ marca }}
         </li>
@@ -36,14 +37,23 @@
       v-if="filteredModels.length < 1 || !selectingMarca"
     >
     </ripples-button>
+    <confirm-box
+      v-if="askForConfirmation"
+      @leave="leave"
+      @cancel="cancel"
+    ></confirm-box>
   </div>
+  <GoBackButton @click="this.$router.replace('/atendente')"></GoBackButton>
+  <LogoutButtonVue color="white"></LogoutButtonVue>
 </template>
 
 <script>
+import GoBackButton from "./GoBackButton.vue";
 import { onMounted, reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
 import RipplesButton from "./RipplesButton.vue";
-
+import confirmBox from "./confirmBox.vue";
+import LogoutButtonVue from "./LogoutButton.vue";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 export default {
   setup() {
@@ -66,7 +76,9 @@ export default {
     let error = ref("false");
     let router = useRouter();
     let marcaSelected = ref(false);
+    let askForConfirmation = ref(false);
     function submitted() {
+      leaveConfirm.value = true;
       marcaSelected.value = true;
       if (search.search == "") {
         error.value = "true";
@@ -78,7 +90,8 @@ export default {
     }
     function selectMarca(marca) {
       search.search = marca;
-      store.commit("setMarca", marca);
+
+      localStorage.setItem("marca", marca);
       selectingMarca.value = false;
     }
     function selectingAgain() {
@@ -103,9 +116,18 @@ export default {
         });
       },
     });
+    let leaveConfirm = ref(false);
+
+    function leave() {
+      leaveConfirm.value = true;
+      router.replace("/seguroauto");
+    }
+    function cancel() {
+      askForConfirmation.value = false;
+    }
     onBeforeRouteLeave((to) => {
-      if (to.path == "/seguro2" && !marcaSelected.value) {
-        error.value = "true";
+      askForConfirmation.value = true;
+      if (to.path == "/seguro2" && !leaveConfirm.value) {
         return false;
       }
       return true;
@@ -120,6 +142,9 @@ export default {
       selectingAgain,
       error,
       submitted,
+      askForConfirmation,
+      leave,
+      cancel,
     };
   },
   watch: {
@@ -129,7 +154,7 @@ export default {
       }
     },
   },
-  components: { RipplesButton },
+  components: { RipplesButton, confirmBox, GoBackButton, LogoutButtonVue },
 };
 </script>
 <style scoped>
@@ -142,7 +167,115 @@ export default {
 .move {
   margin-top: 215px;
 }
+.voltar {
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+.two {
+  position: absolute;
+  top: 19.9px;
+  left: 14px;
+  z-index: 1000;
+  padding: 2.5px;
+}
+.arrow {
+  border: solid #71797e;
+  border-width: 0 2.5px 2.5px 0;
+  display: inline-block;
+  padding: 3px;
+}
 
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+.button-17 {
+  align-items: center;
+  appearance: none;
+  background-color: white;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #174ea6;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: 0.25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform, opacity;
+  z-index: 0;
+}
+
+.button-17:hover {
+  background: #a8a9ad;
+}
+
+.button-17:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%),
+    0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-17:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-17:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 2px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 6px 10px 4px;
+}
+
+.button-17:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 4px 4px 0,
+    rgba(60, 64, 67, 0.15) 0 8px 12px 6px;
+}
+
+.button-17:disabled {
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
+    rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+li.borderedList {
+  padding: 16px 16px 16px 16px;
+  cursor: pointer;
+
+  border-right: 1px solid rgb(0, 0, 0, 0.2);
+  border-left: 0.5px solid rgb(0, 0, 0, 0.2);
+  border-bottom: 0.1px solid rgb(0, 0, 0, 0.1);
+}
+li.borderedList:hover {
+  background-color: rgba(0, 0, 0, 0.14);
+}
 .marcaTitulo {
   font-size: 22px;
   font-weight: 500;
@@ -156,18 +289,6 @@ p {
   color: #f44336;
   font-size: 11px;
   position: relative;
-}
-
-li {
-  padding: 16px 16px 16px 16px;
-  cursor: pointer;
-
-  border-right: 1px solid rgb(0, 0, 0, 0.2);
-  border-left: 0.5px solid rgb(0, 0, 0, 0.2);
-  border-bottom: 0.1px solid rgb(0, 0, 0, 0.1);
-}
-li:hover {
-  background-color: rgba(0, 0, 0, 0.14);
 }
 
 form {

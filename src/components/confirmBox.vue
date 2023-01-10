@@ -3,8 +3,6 @@
     <div class="dialog">
       <header>
         <h3 class="title">Ir para a página anterior?</h3>
-
-        <i class="fa fa-close"></i>
       </header>
       <div class="dialog-msg">
         <p class="description">
@@ -100,26 +98,9 @@ body {
 
 .dialog-overlay .dialog header {
   background-color: hsl(223deg 8% 22%);
-}
-.dialog-overlay .dialog header {
   padding: 10px 8px;
 }
 
-.dialog-overlay .dialog header .fa-close {
-  float: right;
-  color: #c4c5c7;
-  cursor: pointer;
-  transition: all 0.5s ease;
-  padding: 0 2px;
-  border-radius: 1px;
-}
-.dialog-overlay .dialog header .fa-close:hover {
-  color: #b9b9b9;
-}
-.dialog-overlay .dialog header .fa-close:active {
-  box-shadow: 0 0 5px #673ab7;
-  color: #a2a2a2;
-}
 .dialog-overlay .dialog .dialog-msg {
   padding: 12px 10px;
 }
@@ -130,22 +111,12 @@ body {
 .dialog-overlay .dialog footer .controls {
   direction: rtl;
 }
-.dialog-overlay .dialog footer .controls .button {
-}
+
 .button {
   cursor: pointer;
 }
 
-.button-danger {
-  background-color: #f44336;
-  border: 1px solid #d32f2f;
-  color: #f5f5f5;
-}
 .description {
   color: white;
-}
-.link {
-  padding: 5px 10px;
-  cursor: pointer;
 }
 </style>

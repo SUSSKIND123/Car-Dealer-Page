@@ -227,7 +227,7 @@ export default {
       }
     },
     voltar() {
-      this.$router.push("/atendente");
+      this.$router.replace("/atendente");
     },
     logout() {
       this.$store.dispatch("logout");

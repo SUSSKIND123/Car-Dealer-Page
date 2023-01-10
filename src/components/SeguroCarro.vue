@@ -42,18 +42,23 @@
       @cancel="cancel"
     ></confirm-box>
   </div>
+  <GoBackButton @click="this.$router.replace('/seguro')"></GoBackButton>
+  <LogoutButtonVue color="white"></LogoutButtonVue>
 </template>
 
 <script>
+import LogoutButtonVue from "./LogoutButton.vue";
+import GoBackButton from "./GoBackButton.vue";
 import RipplesButton from "./RipplesButton.vue";
 import confirmBox from "./confirmBox.vue";
-import { onMounted, reactive, computed, ref } from "vue";
-import { useStore } from "vuex";
+import { onMounted, reactive, computed, ref, onUnmounted } from "vue";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 export default {
   components: {
     RipplesButton,
     confirmBox,
+    GoBackButton,
+    LogoutButtonVue,
   },
 
   setup() {
@@ -96,8 +101,8 @@ export default {
     let search = reactive({ search: "" });
     const marca = computed({
       get() {
-        const marca = useStore().getters.marca;
-        console.log(marca);
+        const marca = localStorage.getItem("marca");
+
         return marca;
       },
     });
@@ -131,11 +136,14 @@ export default {
     let leaveConfirm = ref(false);
     function leave() {
       leaveConfirm.value = true;
-      router.push("/seguro");
+      router.replace("/seguro");
     }
     function cancel() {
       askForConfirmation.value = false;
     }
+    onUnmounted(() => {
+      localStorage.removeItem("marca");
+    });
     onBeforeRouteLeave((to) => {
       askForConfirmation.value = true;
       if (to.path == "/seguro" && !leaveConfirm.value) {

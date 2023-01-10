@@ -63,16 +63,18 @@
     </div>
     <!--se for homem -->
 
-    <div class="logout">
-      <button class="button-17" role="button" @click="logout">Logout</button>
-    </div>
+    <LogoutButtonVue></LogoutButtonVue>
 
     <!-- a dialog should be shown on the screen and options of router links should be available
      <router-link style="text-decoration: none; color: inherit;" to="/hello"> -->
   </div>
 </template>
 <script>
+import LogoutButtonVue from "./LogoutButton.vue";
 export default {
+  components: {
+    LogoutButtonVue,
+  },
   data() {
     return {
       seminovo: null,
@@ -85,11 +87,6 @@ export default {
     };
   },
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      console.log("Click");
-      this.$router.replace("/login");
-    },
     async getUser() {
       if (localStorage.getItem("gender") && localStorage.getItem("name")) {
         this.name = localStorage.getItem("name");
@@ -119,25 +116,25 @@ export default {
   watch: {
     seminovo(seminovo) {
       if (seminovo == "seminovo") {
-        this.$router.push("/carros");
+        this.$router.replace("/carros");
       }
       if (seminovo == "seguroCarro") {
-        this.$router.push("/seguroAuto");
+        this.$router.replace("/seguroAuto");
       }
       if (seminovo == "seguroVida") {
-        this.$router.push("/seguroVida");
+        this.$router.replace("/seguroVida");
       }
       if (seminovo == "duvida") {
-        this.$router.push("/duvida");
+        this.$router.replace("/duvida");
       }
       if (seminovo == "errado") {
-        this.$router.push("/errado");
+        this.$router.replace("/errado");
       }
       if (seminovo == "reclamacao") {
-        this.$router.push("/reclamacao");
+        this.$router.replace("/reclamacao");
       }
       if (seminovo == "outro") {
-        this.$router.push("/outro");
+        this.$router.replace("/outro");
       }
     },
   },
