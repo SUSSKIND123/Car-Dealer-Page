@@ -43,7 +43,7 @@
     ></confirm-box>
   </div>
   <GoBackButton @click="this.$router.replace('/seguro')"></GoBackButton>
-  <LogoutButtonVue color="white"></LogoutButtonVue>
+  <LogoutButtonVue color="white" @click="leaveConfirm = true"></LogoutButtonVue>
 </template>
 
 <script>
@@ -64,16 +64,12 @@ export default {
   setup() {
     let data = reactive({ data: { results: [{ Model: "" }] } });
     onMounted(async () => {
-      const response = await fetch(
-        "https://parseapi.back4app.com/classes/Car_Model_List?limit=3510&keys=Make,Model",
-        {
-          headers: {
-            "X-Parse-Application-Id":
-              "hlhoNKjOvEhqzcVAJ1lxjicJLZNVv36GdbboZj3Z", // This is the fake app's application id
-            "X-Parse-Master-Key": "SNMJJF0CZZhTPhLDIqGhTlUNV9r60M2Z5spyWfXW", // This is the fake app's readonly master key
-          },
-        }
-      );
+      const response = await fetch(process.env.VUE_APP_CARAPI, {
+        headers: {
+          "X-Parse-Application-Id": "hlhoNKjOvEhqzcVAJ1lxjicJLZNVv36GdbboZj3Z",
+          "X-Parse-Master-Key": "SNMJJF0CZZhTPhLDIqGhTlUNV9r60M2Z5spyWfXW",
+        },
+      });
       data.data = await response.json();
     });
     const selectingModel = ref(true);
@@ -91,7 +87,7 @@ export default {
       } else if (uniqueModels.value.indexOf(search.search) == -1) {
         error.value = "invalidInput";
       } else {
-        router.push("/seguro2");
+        router.push("/seguro3");
       }
     }
     function selectingAgain() {
@@ -142,11 +138,14 @@ export default {
       askForConfirmation.value = false;
     }
     onUnmounted(() => {
-      localStorage.removeItem("marca");
+      if (leaveConfirm.value == true) {
+        localStorage.removeItem("marca");
+      }
     });
     onBeforeRouteLeave((to) => {
-      askForConfirmation.value = true;
       if (to.path == "/seguro" && !leaveConfirm.value) {
+        askForConfirmation.value = true;
+        leaveConfirm.value = false;
         return false;
       }
       return true;
@@ -165,6 +164,7 @@ export default {
       askForConfirmation,
       leave,
       cancel,
+      leaveConfirm,
     };
   },
 
@@ -237,10 +237,10 @@ input[type="text"] {
   box-shadow: 0px 0.5px 0px 0.4px rgb(0, 0, 0, 0.2);
 }
 input[type="text"]:hover {
-  border: 1.4px solid black;
+  border: 1.4px solid lightgreen;
 }
 input[type="text"]:focus {
-  border: 1.4px solid black;
+  border: 1.8px solid lightgreen;
 }
 input[type="text"].invalid {
   border: 1.45px solid #f44336;
@@ -262,5 +262,10 @@ ul {
 }
 .list-items:hover {
   background-color: #dddddd;
+}
+@media screen and (max-width: 700px) {
+  .move {
+    margin-top: 250px;
+  }
 }
 </style>

@@ -11,6 +11,8 @@
   </div>
 </template>
 <script>
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   props: {
     color: {
@@ -19,10 +21,12 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
     function logout() {
-      this.$store.dispatch("logout");
+      store.dispatch("logout");
       console.log("Click");
-      this.$router.replace("/login");
+      router.replace("/login");
     }
     return { logout };
   },

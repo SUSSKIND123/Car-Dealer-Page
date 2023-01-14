@@ -1,1 +1,1 @@
-<template>Reclamaçao</template>
+<template>not implemented</template>

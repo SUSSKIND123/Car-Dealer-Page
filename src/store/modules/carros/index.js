@@ -80,7 +80,7 @@ export default {
         {
           img: "jeepCompass3.png",
           Modelo: "2018 JEEP COMPASS",
-          Marca: "Ford",
+          Marca: "Jeep",
           Preço: "149.990",
           Concessionária: "Jeep Osten Brás(Av. Alcântara Machado, 2105)",
           Telefone: "(11) 3192-2966",
@@ -89,7 +89,7 @@ export default {
         {
           img: "jeepCommander3.png",
           Modelo: "2022 JEEP COMMANDER",
-          Marca: "Ford",
+          Marca: "Jeep",
           Preço: "262.000",
           Concessionária: "Alta Braz Leme(Av. Braz Leme, 2885)",
           Telefone: "(11) 2990-4200",
@@ -98,7 +98,7 @@ export default {
         {
           img: "elantra.png",
           Modelo: "2018 Hyundai Elantra SE",
-          Marca: "Ford",
+          Marca: "Hyundai",
           Preço: "86.990",
           Concessionária: "Viamais Autos(Av. Nazaré, 1953)",
           Telefone: "(11) 5061-7100",
@@ -107,7 +107,7 @@ export default {
         {
           img: "bmwx1.png",
           Modelo: "2022 BMW X1",
-          Marca: "Ford",
+          Marca: "BMW",
           Preço: "327.950",
           Concessionária: "Santa Paula Veículos(Av. São Miguel, 8760)",
           Telefone: "(11) 2058-7070",
@@ -116,7 +116,7 @@ export default {
         {
           img: "MercedesGLB.jpeg",
           Modelo: "2021 MERCEDES-BENZ GLB 200",
-          Marca: "Ford",
+          Marca: "Mercedes",
           Preço: "299.900",
           Concessionária:
             "Comark Mercedes-Benz Showroom Jardins(R. Colômbia, 785)",
@@ -144,7 +144,7 @@ export default {
         {
           img: "vwPolo.png",
           Modelo: "2018 VOLKSWAGEN POLO",
-          Marca: "Ford",
+          Marca: "Volkswagen",
           Preço: "239.600",
           Concessionária: "Volkswagen Carrera (Rua Henri Bouchard, 127)",
           Telefone: "(11) 4590-0500",

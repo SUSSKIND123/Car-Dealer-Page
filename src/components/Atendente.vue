@@ -13,23 +13,14 @@
           Com o que nós podemos ajudar hoje?
         </option>
 
-        <option value="seminovo" class="hidden3">
-          Quero comprar um seminovo
-        </option>
-        <option value="seminovo" class="hidden4">Comprar um seminovo</option>
+        <option value="seminovo">Quero comprar um seminovo</option>
 
-        <option value="seguroCarro" class="hidden1">
+        <option value="seguroCarro">
           Gostaria de comprar um seguro para o meu carro
         </option>
-        <option value="seguroCarro" class="hidden2">
-          Comprar seguro para o meu carro
-        </option>
-        <option value="seguroVida" class="hidden5">
-          Quero comprar outro tipo de seguro
-        </option>
-        <option value="seguroVida" class="hidden6">
-          Comprar outro tipo de seguro
-        </option>
+
+        <option value="seguroVida">Quero comprar outro tipo de seguro</option>
+
         <option value="duvida">Tenho uma dúvida sobre o produto</option>
         <option value="errado">Algo deu errado com a minha solicitação</option>
         <option value="reclamacao">Gostaria de fazer uma reclamação</option>
@@ -93,18 +84,19 @@ export default {
         this.gender = localStorage.getItem("gender");
       } else {
         const userId = this.$store.getters.userId;
-        console.log(userId);
         const token = this.$store.getters.token;
         ("?auth= + token");
-
         const response = await fetch(
-          `https://avonale-x-default-rtdb.firebaseio.com/users/${userId}.json?auth=` +
+          process.env.VUE_APP_USERS +
+            userId +
+            process.env.VUE_APP_EXTENSION +
             token
         );
         if (!response.ok) {
           console.log("not ok");
           throw Error();
         }
+
         const user = await response.json();
         this.gender = user.gender;
         this.name = user.name;
@@ -122,19 +114,19 @@ export default {
         this.$router.replace("/seguroAuto");
       }
       if (seminovo == "seguroVida") {
-        this.$router.replace("/seguroVida");
+        this.$router.push("/seguroVida");
       }
       if (seminovo == "duvida") {
-        this.$router.replace("/duvida");
+        this.$router.push("/duvida");
       }
       if (seminovo == "errado") {
-        this.$router.replace("/errado");
+        this.$router.push("/errado");
       }
       if (seminovo == "reclamacao") {
-        this.$router.replace("/reclamacao");
+        this.$router.push("/reclamacao");
       }
       if (seminovo == "outro") {
-        this.$router.replace("/outro");
+        this.$router.push("/outro");
       }
     },
   },
@@ -181,11 +173,6 @@ export default {
   height: 45%;
 }
 
-.hidden2,
-.hidden4,
-.hidden6 {
-  display: none;
-}
 /* CSS */
 .button-17 {
   align-items: center;

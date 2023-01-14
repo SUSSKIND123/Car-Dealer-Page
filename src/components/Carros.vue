@@ -20,7 +20,6 @@
         <option value="todas">Todas</option>
         <option value="Chevrolet">Chevrolet</option>
         <option value="Volkswagen">Volkswagen</option>
-        <option value="Land Rover">Land Rover</option>
         <option value="Volvo">Volvo</option>
         <option value="Gol">Gol</option>
         <option value="Fiat">Fiat</option>
@@ -134,7 +133,7 @@
     <div v-if="!(filteredCarros.length < 1 && !(marca || search))">
       <ul class="navegar2">
         <li>
-          <router-link to="#">
+          <router-link to="/carros">
             <i class="arrow left"></i>
           </router-link>
         </li>
@@ -146,20 +145,19 @@
         </li>
       </ul>
       <ul class="navegarNumeros2">
-        <li class="rounded active"><router-link to="#">1</router-link></li>
+        <li class="rounded active">
+          <router-link to="#">1</router-link>
+        </li>
         <li><router-link to="/carros/p2">2</router-link></li>
         <li><router-link to="/carros/p3">3</router-link></li>
         <li class="lag"><router-link to="/carros/p4">4</router-link></li>
       </ul>
     </div>
   </div>
-  <div
-    v-if="filteredCarros.length < 1 && !(marca || search)"
-    class="navegardiv"
-  >
+  <div v-if="filteredCarros.length < 1 && !(marca || search)">
     <ul class="navegar">
       <li>
-        <router-link to="#">
+        <router-link to="/carros">
           <i class="arrow left"></i>
         </router-link>
       </li>
@@ -227,37 +225,12 @@ export default {
       }
     },
     voltar() {
-      this.$router.replace("/atendente");
+      this.$router.push("/atendente");
     },
     logout() {
       this.$store.dispatch("logout");
       console.log("Click");
       this.$router.replace("/login");
-    },
-    async getUser() {
-      if (localStorage.getItem("gender") && localStorage.getItem("name")) {
-        this.name = localStorage.getItem("name");
-        this.gender = localStorage.getItem("gender");
-      } else {
-        const userId = this.$store.getters.userId;
-        console.log(userId);
-        const token = this.$store.getters.token;
-        ("?auth= + token");
-
-        const response = await fetch(
-          `https://avonale-x-default-rtdb.firebaseio.com/users/${userId}.json?auth=` +
-            token
-        );
-        if (!response.ok) {
-          console.log("not ok");
-          throw Error();
-        }
-        const user = await response.json();
-        this.gender = user.gender;
-        this.name = user.name;
-        localStorage.setItem("gender", user.gender);
-        localStorage.setItem("name", user.name);
-      }
     },
   },
   computed: {
@@ -412,7 +385,6 @@ export default {
   display: inline-block;
   padding: 3px;
 }
-
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);

@@ -230,31 +230,6 @@ export default {
       console.log("Click");
       this.$router.replace("/login");
     },
-    async getUser() {
-      if (localStorage.getItem("gender") && localStorage.getItem("name")) {
-        this.name = localStorage.getItem("name");
-        this.gender = localStorage.getItem("gender");
-      } else {
-        const userId = this.$store.getters.userId;
-        console.log(userId);
-        const token = this.$store.getters.token;
-        ("?auth= + token");
-
-        const response = await fetch(
-          `https://avonale-x-default-rtdb.firebaseio.com/users/${userId}.json?auth=` +
-            token
-        );
-        if (!response.ok) {
-          console.log("not ok");
-          throw Error();
-        }
-        const user = await response.json();
-        this.gender = user.gender;
-        this.name = user.name;
-        localStorage.setItem("gender", user.gender);
-        localStorage.setItem("name", user.name);
-      }
-    },
   },
   computed: {
     filteredCarros() {

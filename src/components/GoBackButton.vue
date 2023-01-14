@@ -2,7 +2,7 @@
   <ul>
     <li><i class="arrow left two"></i></li>
     <div class="voltar">
-      <button class="button-17" role="button" @click="voltar">
+      <button class="button-17" role="button">
         <span style="margin-left: 8px"> Voltar</span>
       </button>
     </div>
@@ -117,5 +117,8 @@ li.borderedList {
 }
 li.borderedList:hover {
   background-color: rgba(0, 0, 0, 0.14);
+}
+li {
+  list-style: none;
 }
 </style>

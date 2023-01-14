@@ -1,4 +1,5 @@
 <template>
+  Not implemented
   <ripples-button></ripples-button>
 </template>
 <script>

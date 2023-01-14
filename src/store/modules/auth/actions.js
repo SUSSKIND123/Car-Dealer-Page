@@ -3,17 +3,14 @@ let error;
 
 export default {
   async login(context, payload) {
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA_FybGMvw_0AuI9UGGkiHvRWHGHIe9r9Q",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: payload.email,
-          password: payload.password,
-          returnSecureToken: true,
-        }),
-      }
-    );
+    const response = await fetch(process.env.VUE_APP_LOGINURL, {
+      method: "POST",
+      body: JSON.stringify({
+        email: payload.email,
+        password: payload.password,
+        returnSecureToken: true,
+      }),
+    });
     const responseData = await response.json();
 
     if (!response.ok) {
@@ -43,17 +40,14 @@ export default {
   },
   async signup(context, payload) {
     try {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA_FybGMvw_0AuI9UGGkiHvRWHGHIe9r9Q",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: payload.email,
-            password: payload.password,
-            returnSecureToken: true,
-          }),
-        }
-      );
+      const response = await fetch(process.env.VUE_APP_SIGNUPURL, {
+        method: "POST",
+        body: JSON.stringify({
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true,
+        }),
+      });
 
       const responseData = await response.json();
       if (!response.ok) {
@@ -61,6 +55,7 @@ export default {
           responseData.message ||
             "Failed to authenticate. Check your login data."
         );
+        context.commit("setError", error);
         throw error;
       }
 
@@ -89,7 +84,9 @@ export default {
       const userId = responseData.localId;
 
       const response2 = await fetch(
-        `https://avonale-x-default-rtdb.firebaseio.com/users/${userId}.json?auth=` +
+        process.env.VUE_APP_USERS +
+          userId +
+          process.env.VUE_APP_EXTENSION +
           token,
         {
           method: "PUT",

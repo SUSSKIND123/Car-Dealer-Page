@@ -8,7 +8,9 @@ import Carros4 from "./components/Carros4.vue";
 import SeguroVida from "./components/SeguroVida.vue";
 import SeguroCarro from "./components/SeguroCarro.vue";
 import SeguroCarroMarca from "./components/SeguroCarroMarca.vue";
+import ModelYear from "./components/ModelYear.vue";
 import SeguroAuto from "./components/SeguroAuto.vue";
+import Email from "./components/Email.vue";
 import EntreContato from "./components/EntreContato.vue";
 import Duvida from "./components/Duvida.vue";
 import Errado from "./components/Errado.vue";
@@ -34,6 +36,11 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: "/seguro3",
+      component: ModelYear,
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/seguro2",
       component: SeguroCarro,
       meta: { requiresAuth: true },
@@ -48,7 +55,11 @@ const router = createRouter({
       component: SeguroAuto,
       meta: { requiresAuth: true },
     },
-
+    {
+      path: "/seguro4",
+      component: Email,
+      meta: { requiresAuth: true },
+    },
     { path: "/entre", component: EntreContato, meta: { requiresAuth: true } },
     { path: "/cart", component: Cart, meta: { requiresAuth: true } },
     { path: "/duvida", component: Duvida, meta: { requiresAuth: true } },
