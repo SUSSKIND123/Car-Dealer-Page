@@ -83,21 +83,24 @@ export default {
   font-size: 2.1rem;
   letter-spacing: 1.5px;
 }
+
 .pic {
   width: 46.451%;
   z-index: 100;
 }
 .welcomepic {
-  margin-left: 64%;
-  margin-top: 2.58%;
+  bottom: 0;
+  right: 0;
+  width: 36%;
+  position: absolute;
 }
 .backpic {
-  width: 91.3%;
+  width: 1028px;
   z-index: 2;
 }
 .backgroundpic {
-  top: 0%;
   left: 10.6%;
+  bottom: 0;
   position: absolute;
   z-index: -2;
 }
@@ -228,5 +231,149 @@ p {
 .button-17:disabled {
   box-shadow: rgba(60, 64, 67, 0.3) 0 1px 3px 0,
     rgba(60, 64, 67, 0.15) 0 4px 8px 3px;
+}
+@media screen and (max-width: 1300px) {
+  .backpic {
+    width: 1015px;
+    z-index: 2;
+  }
+  .welcomepic {
+    bottom: 0;
+    right: -120px;
+    width: 39%;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 1168.73px) {
+  .welcomepic {
+    bottom: 0;
+    right: -120px;
+    width: 42%;
+    position: absolute;
+  }
+  .brand {
+    left: 11%;
+  }
+  .telefone {
+    left: 78%;
+  }
+}
+@media screen and (max-width: 1115.73px) {
+  .brand {
+    left: 12%;
+  }
+  .telefone {
+    left: 76%;
+  }
+}
+@media screen and (max-width: 1075.64px) {
+  .welcomepic {
+    bottom: 0;
+    right: -180px;
+    width: 46%;
+    position: absolute;
+  }
+  .brand {
+    left: 12%;
+  }
+  .telefone {
+    left: 76%;
+  }
+}
+@media screen and (max-width: 1024.64px) {
+  .brand {
+    left: 12.2%;
+  }
+  .telefone {
+    left: 74%;
+  }
+}
+@media screen and (max-width: 1008.19px) {
+  .welcomepic {
+    bottom: 0;
+    right: -200px;
+    width: 49%;
+    position: absolute;
+  }
+  .brand {
+    left: 12.5%;
+  }
+  .telefone {
+    left: 72%;
+  }
+}
+@media screen and (max-width: 908.36px) {
+  .welcomepic {
+    bottom: 0;
+    right: -200px;
+    width: 49%;
+    position: absolute;
+    display: none;
+  }
+  .backpic {
+    display: none;
+  }
+  .brand {
+    left: 14%;
+  }
+  .telefone {
+    left: 72%;
+  }
+  @media screen and (max-width: 908.36px) {
+    .brand {
+      left: 14.8%;
+    }
+    .telefone {
+      left: 70%;
+    }
+  }
+  @media screen and (max-width: 794.36px) {
+    .brand {
+      left: 15.8%;
+    }
+    .telefone {
+      left: 68%;
+    }
+  }
+  @media screen and (max-width: 794.36px) {
+    .brand {
+      left: 15.8%;
+    }
+    .telefone {
+      left: 67%;
+    }
+  }
+  @media screen and (max-width: 719.36px) {
+    .brand {
+      left: 17.5%;
+    }
+    .telefone {
+      left: 65%;
+    }
+  }
+  @media screen and (max-width: 677.36px) {
+    .brand {
+      left: 18.5%;
+    }
+    .telefone {
+      left: 62%;
+    }
+  }
+  @media screen and (max-width: 646.36px) {
+    .brand {
+      left: 19.5%;
+    }
+    .telefone {
+      left: 60%;
+    }
+  }
+  @media screen and (max-width: 598.55px) {
+    .brand {
+      left: 19.5%;
+    }
+    .telefone {
+      left: 58%;
+    }
+  }
 }
 </style>

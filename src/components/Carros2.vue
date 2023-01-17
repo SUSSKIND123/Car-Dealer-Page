@@ -410,14 +410,14 @@ a {
 }
 
 .navegar {
-  bottom: 62px;
-  left: 141px;
-  position: absolute;
+  bottom: 35px;
+  left: 0px;
+  position: fixed;
 }
 .navegarNumeros {
-  bottom: 30px;
-  left: 144px;
-  position: absolute;
+  bottom: 0;
+  left: 0;
+  position: fixed;
 }
 .navegar2 {
   bottom: 7px;
